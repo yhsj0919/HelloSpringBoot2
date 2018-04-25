@@ -48,5 +48,10 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     compile("org.jetbrains.kotlin:kotlin-reflect")
     compile("com.alibaba:fastjson:1.2.46")
+
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    runtime('mysql:mysql-connector-java')
+
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
