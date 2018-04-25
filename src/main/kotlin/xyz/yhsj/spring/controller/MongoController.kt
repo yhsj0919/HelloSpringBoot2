@@ -1,6 +1,7 @@
 package xyz.yhsj.spring.controller
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
@@ -8,6 +9,7 @@ import xyz.yhsj.spring.dao.user.RoleDao
 import xyz.yhsj.spring.dao.user.UserDao
 import xyz.yhsj.spring.entity.user.RoleEntity
 import xyz.yhsj.spring.entity.user.UserEntity
+import xyz.yhsj.spring.utils.RedisSuper
 import javax.servlet.http.HttpServletRequest
 
 
@@ -22,6 +24,9 @@ class TodoController {
     lateinit var userDao: UserDao
     @Autowired
     lateinit var roleDao: RoleDao
+
+    @Autowired
+    lateinit var redisSuper: RedisSuper
 
     /**
      * 查询TODO列表
@@ -72,8 +77,10 @@ class TodoController {
     /**
      * 查询TODO列表
      */
+    @Cacheable(value = ["users"], key = "#userName")
     @RequestMapping(value = ["/user"], method = [RequestMethod.GET])
-    fun findUser(request: HttpServletRequest): List<UserEntity> {
+    fun findUser(userName: String): List<UserEntity> {
+        println(userName)
 
         return userDao.getUsers()
 

@@ -21,6 +21,8 @@ class UserDaoImpl : UserDao {
 
     override fun getUsers(): List<UserEntity> {
 
+        println(">>>>>>>>通过数据库获取>>>>>>>>>>>>>>>")
+
         return mongoTemplate.findAll(UserEntity::class.java)
     }
 
