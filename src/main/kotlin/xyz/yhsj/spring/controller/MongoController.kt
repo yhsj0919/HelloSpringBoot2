@@ -34,41 +34,41 @@ class TodoController {
     @RequestMapping(value = ["/addRole"], method = [RequestMethod.GET])
     fun getAuthorList(request: HttpServletRequest): String {
 
-//        val users = (0..10).map {
-//            val user = UserEntity()
+//        val roles = (1..2).map {
+//            val user = RoleEntity()
 //            user.id = it.toString()
-//            user.userName = "测试用户$it"
+//            user.name = "角色$it"
 //            user
 //        }
 
+//        roleDao.saveRole(RoleEntity(name = "ROLE_admin"))
+//        roleDao.saveRole(RoleEntity(name = "ROLE_user"))
+//
+//        userDao.saveUser(UserEntity(userName = "root", passWord = "123456"))
+//        userDao.saveUser(UserEntity(userName = "yhsj", passWord = "123456"))
+
+//        userDao.updateUser(UserEntity(id = "5ae188d9ea5cd72bdcb456fa", rolers = arrayListOf(RoleEntity(id = "5ae188d9ea5cd72bdcb456f8"))))
+//        userDao.updateUser(UserEntity(id = "5ae188d9ea5cd72bdcb456fb", rolers = arrayListOf(RoleEntity(id = "5ae188d9ea5cd72bdcb456f9"))))
+
+
+//        val users = (1..10)
+//                .map { roleIndex ->
+//                    val role = UserEntity()
+//                    role.userName = "用户名称$roleIndex"
+//
+//                    role.rolers = arrayListOf(RoleEntity(id = ((Math.random() * 2).toInt()).toString()))
+//                    role
+//                }
 //        userDao.saveUsers(users)
-
-
-        val roles = (0..100)
-                .map { roleIndex ->
-                    val role = RoleEntity()
-                    role.name = "角色$roleIndex"
-
-                    (0..10).map {
-                        val user = UserEntity()
-                        user.id = it.toString()
-                        user
-                    }
-
-                    role.users = UserEntity(id = ((Math.random() * 10).toInt()).toString())
-                    role
-                }
-
-
-        roleDao.saveRoles(roles)
         return "成功"
     }
 
     /**
      * 查询TODO列表
      */
+    @Cacheable(value = ["users"], key = "#userName")
     @RequestMapping(value = ["/role"], method = [RequestMethod.GET])
-    fun findTodo(request: HttpServletRequest): List<RoleEntity> {
+    fun findTodo(request: HttpServletRequest, userName: String): List<RoleEntity> {
 
         return roleDao.getRoles()
 
@@ -83,7 +83,22 @@ class TodoController {
         println(userName)
 
         return userDao.getUsers()
+    }
 
+
+    @RequestMapping(value = ["/login"], method = [RequestMethod.POST])
+    fun login(userName: String?, error: String?): UserEntity? {
+        return userDao.findUserByUserName(userName?:"sss")
+    }
+
+    @RequestMapping(value = ["/success"], method = [RequestMethod.GET])
+    fun success(userName: String): String? {
+        return "成功页面"
+    }
+
+    @RequestMapping(value = ["/failure"], method = [RequestMethod.GET])
+    fun failure(): String? {
+        return "失败页面"
     }
 
 

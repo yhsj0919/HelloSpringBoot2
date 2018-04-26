@@ -10,7 +10,5 @@ data class RoleEntity(
         @Id
         var id: String? = null,
         var name: String? = null,
-        @DBRef
-        var users: UserEntity? = null
-
+        var password: String? = null
 ) : Serializable
