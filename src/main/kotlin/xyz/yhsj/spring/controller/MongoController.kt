@@ -43,12 +43,12 @@ class TodoController {
 
 //        roleDao.saveRole(RoleEntity(name = "ROLE_admin"))
 //        roleDao.saveRole(RoleEntity(name = "ROLE_user"))
-//
-//        userDao.saveUser(UserEntity(userName = "root", passWord = "123456"))
-//        userDao.saveUser(UserEntity(userName = "yhsj", passWord = "123456"))
 
-//        userDao.updateUser(UserEntity(id = "5ae188d9ea5cd72bdcb456fa", rolers = arrayListOf(RoleEntity(id = "5ae188d9ea5cd72bdcb456f8"))))
-//        userDao.updateUser(UserEntity(id = "5ae188d9ea5cd72bdcb456fb", rolers = arrayListOf(RoleEntity(id = "5ae188d9ea5cd72bdcb456f9"))))
+        userDao.saveUser(UserEntity(userName = "root", passWord = "123456",roles = arrayListOf(RoleEntity(id = "5ae188d9ea5cd72bdcb456f8"))))
+        userDao.saveUser(UserEntity(userName = "yhsj", passWord = "123456", roles = arrayListOf(RoleEntity(id = "5ae188d9ea5cd72bdcb456f9"))))
+
+//        userDao.updateUser(UserEntity(id = "5ae188d9ea5cd72bdcb456fa", roles = arrayListOf(RoleEntity(id = "5ae188d9ea5cd72bdcb456f8"))))
+//        userDao.updateUser(UserEntity(id = "5ae188d9ea5cd72bdcb456fb", roles = arrayListOf(RoleEntity(id = "5ae188d9ea5cd72bdcb456f9"))))
 
 
 //        val users = (1..10)
@@ -88,11 +88,11 @@ class TodoController {
 
     @RequestMapping(value = ["/login"], method = [RequestMethod.POST])
     fun login(userName: String?, error: String?): UserEntity? {
-        return userDao.findUserByUserName(userName?:"sss")
+        return userDao.findUserByUserName("yhsj"?:"sss")
     }
 
     @RequestMapping(value = ["/success"], method = [RequestMethod.GET])
-    fun success(userName: String): String? {
+    fun success(userName: String?): String? {
         return "成功页面"
     }
 

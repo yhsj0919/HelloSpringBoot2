@@ -54,7 +54,7 @@ class UserDaoImpl : UserDao {
      */
     override fun updateUser(user: UserEntity): Long {
         val query = Query(Criteria.where("id").`is`(user.id!!))
-        val update = Update().set("rolers", user.rolers)
+        val update = Update().set("roles", user.roles)
         //更新查询返回结果集的第一条
         val result = mongoTemplate.updateFirst(query, update, UserEntity::class.java)
         //更新查询返回结果集的所有

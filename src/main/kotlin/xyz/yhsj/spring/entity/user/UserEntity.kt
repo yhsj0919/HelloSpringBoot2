@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.io.Serializable
 import org.springframework.security.core.authority.AuthorityUtils
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 
 
 @Document(collection = "User")
@@ -16,18 +17,14 @@ data class UserEntity(
         var userName: String? = null,
         var passWord: String? = null,
         @DBRef
-        var rolers: ArrayList<RoleEntity> = ArrayList()
+        var roles: ArrayList<RoleEntity> = ArrayList()
 ) : Serializable, UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        if (rolers.isEmpty()) {
-            return AuthorityUtils.commaSeparatedStringToAuthorityList("")
+        val authorities = java.util.ArrayList<GrantedAuthority>()
+        for (role in roles) {
+            authorities.add(SimpleGrantedAuthority(role.name))
         }
-        val commaBuilder = StringBuilder()
-        for (role in rolers) {
-            commaBuilder.append(role.name).append(",")
-        }
-        val authorities = commaBuilder.substring(0, commaBuilder.length - 1)
-        return AuthorityUtils.commaSeparatedStringToAuthorityList(authorities)
+        return authorities
 
     }
 
