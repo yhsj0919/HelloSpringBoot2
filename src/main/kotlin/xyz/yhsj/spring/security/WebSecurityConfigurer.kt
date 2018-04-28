@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component
 
 /**
  * 权限控制，表明各个接口的权限
+ * 参考自https://www.jianshu.com/p/f7609dee0c72
  */
 @Component
 class WebSecurityConfigurer : WebSecurityConfigurerAdapter() {
